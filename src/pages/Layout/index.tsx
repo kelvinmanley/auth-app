@@ -4,7 +4,7 @@ import "./style.scss";
 import LogOutModal from "../../components/LogOutModal";
 import { useState } from "react";
 
-const Layout = () => {
+const Layout: React.FC = () => {
   const [logout, setLogout] = useState(false);
 
   const handleLogoutToggle = () => setLogout(!logout);

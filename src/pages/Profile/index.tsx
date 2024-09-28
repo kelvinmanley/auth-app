@@ -1,8 +1,13 @@
-const Profile = () => {
+import UpdateModal from "../../components/UpdateModal";
+import "../../styles/general.scss";
+
+const Home: React.FC = () => {
   return (
-    <>
-      <h1>Profile</h1>
-    </>
+    <div className="page-wrapper">
+      <div className="content-container mobile-slim-container">
+        <UpdateModal />
+      </div>
+    </div>
   );
 };
-export default Profile;
+export default Home;

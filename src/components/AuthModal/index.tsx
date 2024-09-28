@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import "./style.scss";
 import { IProps, FormInputs } from "./interfaces";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../regex-patterns";
+import "../../styles/modal.scss";
 
 /**
  * @param isLoginType

@@ -13,7 +13,7 @@ body {
 .page-wrapper {
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 24px;
 
   @media only screen and (max-width: $layout-breakpoint-small) {
     padding-top: 0;
@@ -47,5 +47,17 @@ body {
   button {
     @include buttonStyle();
     margin-top: 16px;
+  }
+}
+
+.mobile-slim-container {
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    align-items: center;
+    margin: 0;
+    min-width: 0;
+  }
+
+  @media only screen and (max-width: $layout-breakpoint-extra-small) {
+    padding: 0 16px;
   }
 }

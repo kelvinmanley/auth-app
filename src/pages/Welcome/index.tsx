@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "../../styles/general.scss";
 
-const Welcome = () => {
+const Welcome: React.FC = () => {
   return (
     <div className="page-wrapper">
       <div className="content-container">

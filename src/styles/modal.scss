@@ -1,7 +1,7 @@
-@import "../../../src//styles/breakpoints.scss";
-@import "../../../src//styles/colors.scss";
-@import "../../../src/styles/fonts.scss";
-@import "../../../src/styles/mixins.scss";
+@import "./breakpoints.scss";
+@import "./colors.scss";
+@import "./fonts.scss";
+@import "./mixins.scss";
 
 @include disabledButtonStyle;
 
@@ -23,6 +23,7 @@ label {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  text-align: left;
 }
 
 .container {
@@ -60,8 +61,13 @@ label {
   font-size: 0.7rem;
   font-weight: 400;
   max-width: 400px;
+  text-align: left;
 
   @media only screen and (max-width: $layout-breakpoint-small) {
     max-width: none;
   }
+}
+
+.borderless {
+  border: none;
 }

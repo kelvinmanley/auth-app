@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const PageNotFound = () => (
+const PageNotFound: React.FC = () => (
   <div className="page-wrapper">
     <div className="content-container">
       <h1>This page does not exist</h1>
