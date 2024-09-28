@@ -1,0 +1,62 @@
+@import "../../../src//styles/breakpoints.scss";
+@import "../../../src//styles/colors.scss";
+@import "../../../src/styles/fonts.scss";
+@import "../../../src/styles/mixins.scss";
+
+@include disabledButtonStyle;
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input {
+  border: 1px solid $light-gray;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  height: 1.85rem;
+  padding: 0 0.75rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.container {
+  background-color: $light;
+  border: 1px solid $light-gray;
+  border-radius: 20px;
+  min-width: 400px;
+  padding: 42px;
+
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    border: none;
+    border-radius: 0;
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media only screen and (max-width: $layout-breakpoint-extra-small) {
+    padding: 42px 16px;
+  }
+}
+
+.submit-button {
+  margin-top: 1rem;
+
+  @include buttonStyle();
+}
+
+.title {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.validation-prompt {
+  color: $salmon;
+  font-size: 0.7rem;
+  font-weight: 400;
+}

@@ -1,0 +1,18 @@
+@import "./breakpoints.scss";
+@import "./colors.scss";
+
+h1 {
+  color: $blue;
+  font-size: 1.75rem;
+  margin: 0;
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    font-size: 1.25rem;
+  }
+}
+
+p {
+  color: $blue;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+}

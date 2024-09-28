@@ -1,0 +1,31 @@
+@import "../../../src/styles/breakpoints.scss";
+@import "../../../src/styles/colors.scss";
+
+nav {
+  background-color: $light-blue;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+a {
+  text-decoration: none;
+
+  :hover {
+    opacity: 0.75;
+  }
+}
+
+.nav-text {
+  color: $light;
+  font-size: 1rem;
+  margin-block-start: 1rem;
+  margin-block-end: 1rem;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    font-size: 0.8rem;
+  }
+}
