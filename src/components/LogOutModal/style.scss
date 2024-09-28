@@ -1,0 +1,66 @@
+@import "../../../src/styles/colors.scss";
+@import "../../../src/styles/mixins.scss";
+
+.modal-backing {
+  bottom: 0;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+.modal-screen {
+  background-color: $dark;
+  height: 100%;
+  opacity: 0.5;
+  position: absolute;
+  width: 100%;
+}
+
+.modal-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    padding-top: 0;
+  }
+}
+
+.logout-container {
+  background-color: $light;
+  border: 1px solid $light-gray;
+  border-radius: 20px;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  justify-content: stretch;
+  min-width: 400px;
+  padding: 42px;
+  position: relative;
+  text-align: center;
+
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    border-radius: 12px;
+    margin: 16px;
+    min-width: 0;
+    width: 100%;
+  }
+
+  @media only screen and (max-width: $layout-breakpoint-extra-small) {
+    border-radius: 8px;
+    margin: 8px;
+    padding: 42px 16px;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    gap: 12px;
+  }
+
+  button {
+    @include buttonStyle();
+  }
+}

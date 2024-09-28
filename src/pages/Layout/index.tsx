@@ -1,8 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
 import "../../styles/general.scss";
 import "./style.scss";
+import LogOutModal from "../../components/LogOutModal";
+import { useState } from "react";
 
 const Layout = () => {
+  const [logout, setLogout] = useState(false);
+
+  const handleLogoutToggle = () => setLogout(!logout);
+
   return (
     <>
       <nav>
@@ -18,12 +24,14 @@ const Layout = () => {
           <p className="nav-text">Profile</p>
         </Link>
 
-        <div className="anchor">
+        <div className="anchor" onClick={handleLogoutToggle}>
           <p className="nav-text">Log out</p>
         </div>
       </nav>
 
       <Outlet />
+
+      {logout && <LogOutModal handleClose={handleLogoutToggle} />}
     </>
   );
 };
