@@ -1,5 +1,6 @@
 @import "./breakpoints.scss";
 @import "./colors.scss";
+@import "./mixins.scss";
 
 body {
   background-color: $off-light;
@@ -17,5 +18,34 @@ body {
   @media only screen and (max-width: $layout-breakpoint-small) {
     padding-top: 0;
     font-size: 0.8rem;
+  }
+}
+
+.content-container {
+  align-items: center;
+  background-color: $light;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 42px 84px;
+  padding: 64px 42px 72px;
+  text-align: center;
+  width: 100%;
+
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    align-items: stretch;
+    margin: 42px 0;
+    min-width: 0;
+    padding: 42px 32px;
+    width: 100%;
+  }
+
+  @media only screen and (max-width: $layout-breakpoint-extra-small) {
+    padding: 42px 16px;
+  }
+
+  button {
+    @include buttonStyle();
+    margin-top: 16px;
   }
 }

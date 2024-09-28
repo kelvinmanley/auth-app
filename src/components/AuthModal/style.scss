@@ -59,4 +59,9 @@ label {
   color: $salmon;
   font-size: 0.7rem;
   font-weight: 400;
+  max-width: 400px;
+
+  @media only screen and (max-width: $layout-breakpoint-small) {
+    max-width: none;
+  }
 }

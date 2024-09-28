@@ -9,7 +9,9 @@ nav {
   padding: 0 1rem;
 }
 
-a {
+a,
+.anchor {
+  cursor: pointer;
   text-decoration: none;
 
   :hover {

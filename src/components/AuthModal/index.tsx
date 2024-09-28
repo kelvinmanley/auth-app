@@ -1,33 +1,53 @@
 import { useMemo, useState } from "react";
 import "./style.scss";
 import { IProps, FormInputs } from "./interfaces";
+import { EMAIL_REGEX, PASSWORD_REGEX } from "../../regex-patterns";
+
+/**
+ * @param isLoginType
+ * @returns Log in instead of create account modal
+ */
 
 const AuthModal: React.FC<IProps> = ({ isLoginType = false }) => {
+  /**
+   * isLoginType used for
+   * • toggling off Repeat your password field and validation
+   * • changing the modal text
+   */
+  const modalTitle = isLoginType
+    ? "Log into your account"
+    : "Create an account";
+
+  const buttonText = isLoginType ? "Log in" : "Sign up";
+
   const [inputs, setInputs] = useState<FormInputs>({
     email: "",
     password: "",
     repeatPassword: "",
   });
 
-  const EMAIL_REGEX = /^[\w-.+]+@([\w-]+\.)+[\w-]{2,4}$/;
-  const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[\W]).{4,}$/;
-
   const validEmail = useMemo(
     () => EMAIL_REGEX.test(inputs.email),
     [inputs.email]
   );
 
+  // Log in modal doesn't display password rules
   const validPassword = useMemo(
-    () => PASSWORD_REGEX.test(inputs.password),
+    () => PASSWORD_REGEX.test(inputs.password) || isLoginType,
     [inputs.password]
   );
 
+  // Log in modal doesn't require repeat password validation
   const validRepeatPassword = useMemo(
-    () => inputs.repeatPassword === inputs.password,
-    [inputs.repeatPassword, inputs.password]
+    () => inputs.repeatPassword === inputs.password || isLoginType,
+    [inputs.repeatPassword, inputs.password, isLoginType]
   );
 
-  const validInputs = validEmail && validPassword && validRepeatPassword;
+  const validInputs =
+    validEmail &&
+    validPassword &&
+    inputs.password.length > 0 &&
+    validRepeatPassword;
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const name = event.target.name;
@@ -37,14 +57,19 @@ const AuthModal: React.FC<IProps> = ({ isLoginType = false }) => {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    alert(inputs);
-    console.log(inputs);
+    if (isLoginType) {
+      alert(inputs);
+      console.log(inputs);
+    } else {
+      alert(inputs);
+      console.log(inputs);
+    }
   };
 
   return (
     <div className="container">
       <div className="title">
-        <h1>Create an account</h1>
+        <h1>{modalTitle}</h1>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -79,23 +104,26 @@ const AuthModal: React.FC<IProps> = ({ isLoginType = false }) => {
           )}
         </label>
 
-        <label>
-          <p>Repeat your password:</p>
-          <input
-            type="password"
-            name="repeatPassword"
-            value={inputs.repeatPassword}
-            onChange={handleChange}
-          />
-          {!validRepeatPassword && inputs.repeatPassword.length > 0 && (
-            <p className="validation-prompt">Passwords do not match.</p>
-          )}
-        </label>
+        {!isLoginType && (
+          <label>
+            <p>Repeat your password:</p>
+            <input
+              type="password"
+              name="repeatPassword"
+              value={inputs.repeatPassword}
+              onChange={handleChange}
+            />
+            {!validRepeatPassword && inputs.repeatPassword.length > 0 && (
+              <p className="validation-prompt">Passwords do not match.</p>
+            )}
+          </label>
+        )}
 
         <input
           className="submit-button"
           disabled={!validInputs}
           type="submit"
+          value={buttonText}
         />
       </form>
     </div>

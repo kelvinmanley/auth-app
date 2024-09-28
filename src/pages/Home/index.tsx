@@ -4,7 +4,7 @@ import "../../styles/general.scss";
 const Home = () => {
   return (
     <div className="page-wrapper">
-      <AuthModal />
+      <AuthModal isLoginType />
     </div>
   );
 };
