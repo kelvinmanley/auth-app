@@ -21,18 +21,21 @@ const Layout: React.FC = () => {
     logOut();
     navigate("/");
   };
+
   const handleLogoutToggle = () => setLogout(!logout);
 
+  // Update user state when auth state changes
   auth.onAuthStateChanged((user) => {
-    if (user === null || user.email === null) {
-      dispatch(clearUserData());
-    } else {
-      dispatch(updateUserData(user.email));
-    }
+    const loggedOut = user === null || user.email === null;
+    const dispatchAction = loggedOut
+      ? clearUserData()
+      : updateUserData(user.email);
+    dispatch(dispatchAction);
   });
 
   return (
     <>
+      {/* Navbar with routes */}
       <nav>
         {!loggedIn ? (
           <Link to="/">
@@ -55,8 +58,10 @@ const Layout: React.FC = () => {
         )}
       </nav>
 
+      {/* Element/Page content */}
       <Outlet />
 
+      {/* Log out modal */}
       {logout && (
         <LogOutModal
           handleLogOut={handleLogOut}

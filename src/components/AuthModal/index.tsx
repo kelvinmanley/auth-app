@@ -1,22 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 import { FormInputs } from "./interfaces";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "../../regex-patterns";
-import "../../styles/modal.scss";
 import { createUser, signIn } from "../../firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { authViewTypes } from "../../redux/authViewSlice";
 import { setToCreate, setToLogIn } from "../../redux/authViewSlice";
+import "../../styles/modal.scss";
 
 const AuthModal: React.FC = () => {
   const authView = useSelector((state: RootState) => state.authView.value);
+
+  // isLoginType used for hiding 'Repeat your password' field and validation and toggling modal text
   const isLoginType = authView === authViewTypes.LOGIN;
-  /**
-   * isLoginType used for
-   * • toggling off Repeat your password field and validation
-   * • changing the modal text
-   */
 
   const modalTitle = isLoginType
     ? "Log into your account"
@@ -26,6 +23,8 @@ const AuthModal: React.FC = () => {
   const switchModalText = isLoginType
     ? "Don't have an account? Sign up"
     : "Already have an account? Log in";
+
+  const signingErrorText = isLoginType ? "logging in" : "signing up";
 
   const [inputs, setInputs] = useState<FormInputs>({
     email: "",
@@ -37,6 +36,8 @@ const AuthModal: React.FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Form validation checks
 
   const validEmail = useMemo(
     () => EMAIL_REGEX.test(inputs.email),
@@ -62,6 +63,13 @@ const AuthModal: React.FC = () => {
     [validEmail, validPassword, inputs.password, validRepeatPassword]
   );
 
+  const disabledSubmit = useMemo(
+    () => !validInputs || !!authError || loading,
+    [validInputs, authError, loading]
+  );
+
+  // Interaction handlers
+
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -81,7 +89,7 @@ const AuthModal: React.FC = () => {
       const errorMessage =
         e.code === "auth/invalid-credential"
           ? "Email or password is incorrect"
-          : "An error occurred while signing in";
+          : `An error occurred while ${signingErrorText}`;
       setAuthError(errorMessage);
     }
     setLoading(false);
@@ -162,7 +170,7 @@ const AuthModal: React.FC = () => {
 
         <input
           className="submit-button"
-          disabled={!validInputs || !!authError || loading}
+          disabled={disabledSubmit}
           type="submit"
           value={buttonText}
         />

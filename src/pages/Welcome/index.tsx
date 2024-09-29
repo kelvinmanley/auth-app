@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import "../../styles/general.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
+import "../../styles/general.scss";
 
 const Welcome: React.FC = () => {
   const email = useSelector((state: RootState) => state.user.value);

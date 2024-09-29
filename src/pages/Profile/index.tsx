@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import UpdateModal from "../../components/UpdateModal";
-import "../../styles/general.scss";
 import { RootState } from "../../redux/store";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import "../../styles/general.scss";
 
 const Home: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);

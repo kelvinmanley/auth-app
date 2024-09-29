@@ -8,6 +8,7 @@ import { changePassword } from "../../firebase/auth";
 
 const UpdateModal: React.FC = () => {
   const email = useSelector((state: RootState) => state.user.value);
+
   const [inputs, setInputs] = useState<FormInputs>({
     newPassword: "",
     repeatPassword: "",
@@ -15,6 +16,8 @@ const UpdateModal: React.FC = () => {
   const [authError, setAuthError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>("");
+
+  // Form validation checks
 
   const validNewPassword = useMemo(
     () => PASSWORD_REGEX.test(inputs.newPassword),
@@ -30,6 +33,13 @@ const UpdateModal: React.FC = () => {
     () => validNewPassword && validRepeatPassword,
     [validNewPassword, validRepeatPassword]
   );
+
+  const disabledSubmit = useMemo(
+    () => !validInputs || !!authError || loading,
+    [validInputs, authError, loading]
+  );
+
+  // Interaction handlers
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const name = event.target.name;
@@ -60,14 +70,14 @@ const UpdateModal: React.FC = () => {
       } else if (e.code === "auth/requires-recent-login") {
         setAuthError("You require a recent login to update your password");
       } else {
-        setAuthError("An error occurred while signing in");
+        setAuthError("An error occurred while updating");
       }
     }
 
     setLoading(false);
   };
 
-  // Clear auth error or success message on field change
+  // Clear auth error and success message on field change
   useEffect(() => {
     if (authError) setAuthError("");
     if (successMessage) setSuccessMessage("");
@@ -117,7 +127,7 @@ const UpdateModal: React.FC = () => {
 
         <input
           className="submit-button"
-          disabled={!validInputs || !!authError || loading}
+          disabled={disabledSubmit}
           type="submit"
           value="Update password"
         />
