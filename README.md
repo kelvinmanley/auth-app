@@ -1,46 +1,29 @@
-# Getting Started with Create React App
+# User Authentication App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This authentication app is built using React for the frontend and Google Firebase for the backend API.
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+To run this application locally you'll need to have Node.js and NPM installed. This project utilises NPM for its package management.
 
-### `npm start`
+Steps to run the application:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Request environment variables directly from the developer
+2. Clone this repo to your local machine
+3. Run `npm install` to install all required packages
+4. Create an `.env.local` file in the root folder and add the environment variables
+5. Run `npm start` to start the server
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Implementation
 
-### `npm test`
+Since React provides an SPA out of the box, React Router was utilized to provide a page-like structure.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Redux was used as a global provider to manage cross-component state namely for user authentication and the authentication modal. This was especially helpful for providing context to the navigation bar and making it responsive to a user's auth state.
 
-### `npm run build`
+React hooks were used for component state management especially with form handling as these element states did not require being shared across various components and the simplicity of hooks satisfy the requirements with reduced, more straightforward code.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Sass was used for component styling and allowed for uniformity across elements by using its variable and mixins functionality.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The log in / sign up modal was built as a single component which reads the app state and changes accordingly. This was done due to modals similarity in structure and functionality. The password update modal was separated as its variation seemed to warrant it being its own component however it could be incorporated with a bit of logic refactoring.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Page redirection was added by reading the global auth state on page load and navigating away if the page should not be accessible in the corresponding auth state.
