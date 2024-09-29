@@ -1,19 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useEffect } from "react";
+import useAuthRedirect from "../../hooks/useAuthRedirect";
 import "../../styles/general.scss";
 
 const Welcome: React.FC = () => {
   const email = useSelector((state: RootState) => state.user.value);
   const name = email?.split("@")[0];
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (email === null) {
-      navigate("/");
-    }
-  }, [email]);
+  useAuthRedirect("/welcome");
 
   return (
     <div className="page-wrapper">

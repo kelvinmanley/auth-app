@@ -1,19 +1,9 @@
-import { useSelector } from "react-redux";
 import AuthModal from "../../components/AuthModal";
+import useAuthRedirect from "../../hooks/useAuthRedirect";
 import "../../styles/general.scss";
-import { RootState } from "../../redux/store";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const Home: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user.value);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user !== null) {
-      navigate("/welcome");
-    }
-  }, [user]);
+  useAuthRedirect("/");
 
   return (
     <div className="page-wrapper">

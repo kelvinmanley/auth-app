@@ -26,4 +26,4 @@ Sass was used for component styling and allowed for uniformity across elements b
 
 The log in / sign up modal was built as a single component which reads the app state and changes accordingly. This was done due to modals similarity in structure and functionality. The password update modal was separated as its variation seemed to warrant it being its own component however it could be incorporated with a bit of logic refactoring.
 
-Page redirection was added by reading the global auth state on page load and navigating away if the page should not be accessible in the corresponding auth state.
+Page redirection was added by creating a hook which reads the global auth state on page load and navigates away if the page should not be accessible in the corresponding auth state.
