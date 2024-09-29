@@ -1,14 +1,20 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FormInputs } from "./interfaces";
 import { PASSWORD_REGEX } from "../../regex-patterns";
+import { auth } from "../../firebase/firebase";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { changePassword } from "../../firebase/auth";
 
 const UpdateModal: React.FC = () => {
-  const email = "test@email.com";
+  const email = useSelector((state: RootState) => state.user.value);
   const [inputs, setInputs] = useState<FormInputs>({
-    password: "",
     newPassword: "",
     repeatPassword: "",
   });
+  const [authError, setAuthError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const validNewPassword = useMemo(
     () => PASSWORD_REGEX.test(inputs.newPassword),
@@ -20,8 +26,10 @@ const UpdateModal: React.FC = () => {
     [inputs.repeatPassword, inputs.newPassword]
   );
 
-  const validInputs =
-    validNewPassword && inputs.password.length > 0 && validRepeatPassword;
+  const validInputs = useMemo(
+    () => validNewPassword && validRepeatPassword,
+    [validNewPassword, validRepeatPassword]
+  );
 
   const handleChange = (event: { target: { name: string; value: string } }) => {
     const name = event.target.name;
@@ -29,11 +37,41 @@ const UpdateModal: React.FC = () => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    alert(inputs);
-    console.log(inputs);
+    setLoading(true);
+
+    try {
+      if (auth.currentUser !== null) {
+        await changePassword(auth.currentUser, inputs.newPassword);
+        setInputs({
+          newPassword: "",
+          repeatPassword: "",
+        });
+
+        // Add interval so password clearing doesn't clear success message
+        setTimeout(() => {
+          setSuccessMessage("Password updated successfully!");
+        }, 350);
+      }
+    } catch (e: any) {
+      if (e.code === "auth/invalid-credential") {
+        setAuthError("Email or password is incorrect");
+      } else if (e.code === "auth/requires-recent-login") {
+        setAuthError("You require a recent login to update your password");
+      } else {
+        setAuthError("An error occurred while signing in");
+      }
+    }
+
+    setLoading(false);
   };
+
+  // Clear auth error or success message on field change
+  useEffect(() => {
+    if (authError) setAuthError("");
+    if (successMessage) setSuccessMessage("");
+  }, [inputs.newPassword, inputs.repeatPassword]);
 
   return (
     <div className="container borderless">
@@ -45,17 +83,7 @@ const UpdateModal: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <label>
           <p>Email:</p>
-          <input disabled type="text" name="email" value={email} />
-        </label>
-
-        <label>
-          <p>Password:</p>
-          <input
-            type="password"
-            name="password"
-            value={inputs.password}
-            onChange={handleChange}
-          />
+          <input disabled type="text" name="email" value={email as string} />
         </label>
 
         <label>
@@ -69,13 +97,13 @@ const UpdateModal: React.FC = () => {
           {!validNewPassword && inputs.newPassword.length > 0 && (
             <p className="validation-prompt">
               Password must contain at least one character and one special, and
-              be at least 4 characters long.
+              be at least 6 characters long.
             </p>
           )}
         </label>
 
         <label>
-          <p>Repeat your password:</p>
+          <p>Confirm password:</p>
           <input
             type="password"
             name="repeatPassword"
@@ -89,10 +117,18 @@ const UpdateModal: React.FC = () => {
 
         <input
           className="submit-button"
-          disabled={!validInputs}
+          disabled={!validInputs || !!authError || loading}
           type="submit"
           value="Update password"
         />
+        {authError && (
+          <p className="validation-prompt centered-text">{authError}</p>
+        )}
+        {successMessage && (
+          <p className="validation-prompt centered-text success">
+            {successMessage}
+          </p>
+        )}
       </form>
     </div>
   );

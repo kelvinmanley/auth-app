@@ -1,4 +1,5 @@
 interface IProps {
+  handleLogOut: () => void;
   handleClose: () => void;
 }
 

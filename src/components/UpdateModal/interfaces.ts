@@ -1,5 +1,4 @@
 interface FormInputs {
-  password: string;
   newPassword: string;
   repeatPassword: string;
 }

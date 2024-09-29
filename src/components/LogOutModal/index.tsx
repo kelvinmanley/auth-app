@@ -2,8 +2,11 @@ import IProps from "./interfaces";
 import "./style.scss";
 import "../../styles/general.scss";
 
-const LogOutModal: React.FC<IProps> = ({ handleClose }) => {
-  const handleLogOutClick = () => {};
+const LogOutModal: React.FC<IProps> = ({ handleLogOut, handleClose }) => {
+  const handleLogOutClick = () => {
+    handleLogOut();
+    handleClose();
+  };
 
   const handleCancelClick = () => handleClose();
 
