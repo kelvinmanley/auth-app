@@ -20,10 +20,10 @@ Since React provides an SPA out of the box, React Router was utilized to provide
 
 Redux was used as a global provider to manage cross-component state namely for user authentication and the authentication modal. This was especially helpful for providing context to the navigation bar and making it responsive to a user's auth state.
 
-React hooks were used for component state management especially with form handling as these element states did not require being shared across various components and the simplicity of hooks satisfy the requirements with reduced, more straightforward code.
+React hooks were used for component state management especially with form handling as these element states did not require being shared across various components and the simplicity of hooks satisfies the requirements with reduced, more straightforward code.
 
 Sass was used for component styling and allowed for uniformity across elements by using its variable and mixins functionality.
 
-The log in / sign up modal was built as a single component which reads the app state and changes accordingly. This was done due to modals similarity in structure and functionality. The password update modal was separated as its variation seemed to warrant it being its own component however it could be incorporated with a bit of logic refactoring.
+The log in / sign up modal was built as a single component which reads the app state and changes accordingly. This was done due to the similarity of these modals in structure and functionality. The password update modal was built as a separate component as its variation seemed to warrant it being its own component however it could be incorporated with a bit of logic refactoring.
 
 Page redirection was added by creating a hook which reads the global auth state on page load and navigates away if the page should not be accessible in the corresponding auth state.
